@@ -137,6 +137,7 @@ public partial class SouvenirModule
     const string _DecolourFlash = "DecolourFlashModule";
     const string _DenialDisplays = "DenialDisplaysModule";
     const string _DevilishEggs = "devilishEggs";
+    const string _Diffusion = "diffusion";
     const string _Digisibility = "digisibility";
     const string _DigitString = "digitString";
     const string _DimensionDisruption = "dimensionDisruption";
@@ -149,6 +150,7 @@ public partial class SouvenirModule
     const string _DoubleExpert = "doubleExpert";
     const string _DoubleListening = "doubleListening";
     const string _DoubleOh = "DoubleOhModule";
+    const string _DoubleScreen = "doubleScreenModule";
     const string _DrDoctor = "DrDoctorModule";
     const string _Dreamcipher = "ksmDreamcipher";
     const string _Duck = "theDuck";
@@ -486,6 +488,7 @@ public partial class SouvenirModule
     const string _SplittingTheLoot = "SplittingTheLootModule";
     const string _SpongebobBirthdayIdentification = "spongebobBirthdayIdentification";
     const string _Stability = "stabilityModule";
+    const string _StableTimeSignatures = "StableTimeSignatures";
     const string _StackedSequences = "stackedSequences";
     const string _Stars = "stars";
     const string _StateOfAggregation = "stateOfAggregation";
@@ -516,6 +519,7 @@ public partial class SouvenirModule
     const string _ThinkingWires = "thinkingWiresModule";
     const string _ThirdBase = "ThirdBase";
     const string _TicTacToe = "TicTacToeModule";
+    const string _TimeSignatures = "timeSignatures";
     const string _Timezone = "timezone";
     const string _TipToe = "TipToe";
     const string _TopsyTurvy = "topsyTurvy";
@@ -699,6 +703,7 @@ public partial class SouvenirModule
             [_DecolourFlash] = (ProcessDecolourFlash, "Decolour Flash", "Timwi"),
             [_DenialDisplays] = (ProcessDenialDisplays, "Denial Displays", "Quinn Wuest"),
             [_DevilishEggs] = (ProcessDevilishEggs, "Devilish Eggs", "Timwi"),
+            [_Diffusion] = (ProcessDiffusion, "Diffusion", "Anonymous"),
             [_Digisibility] = (ProcessDigisibility, "Digisibility", "tandyCake"),
             [_DigitString] = (ProcessDigitString, "Digit String", "GoodHood"),
             [_DimensionDisruption] = (ProcessDimensionDisruption, "Dimension Disruption", "Hawker"),
@@ -711,6 +716,7 @@ public partial class SouvenirModule
             [_DoubleExpert] = (ProcessDoubleExpert, "Double Expert", "Kuro"),
             [_DoubleListening] = (ProcessDoubleListening, "Double Listening", "Anonymous"),
             [_DoubleOh] = (ProcessDoubleOh, "Double-Oh", "Timwi"),
+            [_DoubleScreen] = (ProcessDoubleScreen, "Double Screen", "Anonymous"),
             [_DrDoctor] = (ProcessDrDoctor, "Dr. Doctor", "Timwi"),
             [_Dreamcipher] = (ProcessDreamcipher, "Dreamcipher", "BigCrunch22"),
             [_Duck] = (ProcessDuck, "Duck, The", "Kuro"),
@@ -1048,6 +1054,7 @@ public partial class SouvenirModule
             [_SplittingTheLoot] = (ProcessSplittingTheLoot, "Splitting The Loot", "luisdiogo98"),
             [_SpongebobBirthdayIdentification] = (ProcessSpongebobBirthdayIdentification, "Spongebob Birthday Identification", "Hawker"),
             [_Stability] = (ProcessStability, "Stability", "NickLatkovich"),
+            [_StableTimeSignatures] = (ProcessStableTimeSignatures, "Stable Time Signatures", "Anonymous"),
             [_StackedSequences] = (ProcessStackedSequences, "Stacked Sequences", "GhostSalt"),
             [_Stars] = (ProcessStars, "Stars", "BigCrunch22"),
             [_StateOfAggregation] = (ProcessStateOfAggregation, "State of Aggregation", "BigCrunch22"),
@@ -1078,6 +1085,7 @@ public partial class SouvenirModule
             [_ThinkingWires] = (ProcessThinkingWires, "Thinking Wires", "kavinkul"),
             [_ThirdBase] = (ProcessThirdBase, "Third Base", "CaitSith2"),
             [_TicTacToe] = (ProcessTicTacToe, "Tic Tac Toe", "Timwi"),
+            [_TimeSignatures] = (ProcessTimeSignatures, "Time Signatures", "Anonymous"),
             [_Timezone] = (ProcessTimezone, "Timezone", "Timwi"),
             [_TipToe] = (ProcessTipToe, "Tip Toe", "Kuro"),
             [_TopsyTurvy] = (ProcessTopsyTurvy, "Topsy Turvy", "BigCrunch22"),

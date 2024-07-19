@@ -546,7 +546,7 @@ public partial class SouvenirModule
             throw new AbandonModuleException(check);
 
         var formatArgs = new[] { "played in the first stage", "added in the second stage", "added in the third stage" };
-        addQuestions(module, calls.Select((c, ix) => 
+        addQuestions(module, calls.Select((c, ix) =>
             makeQuestion(Question.SimonSamplesSamples, _SimonSamples, formatArgs: new[] { formatArgs[ix] },
             correctAnswers: new[] { SimonSamplesAudio[Array.IndexOf(possibleCalls, c.Substring(ix * 4))] }, preferredWrongAnswers: SimonSamplesAudio.Skip(4 * ix).Take(4).ToArray())));
     }
@@ -1407,8 +1407,6 @@ public partial class SouvenirModule
         var badnik = badniksArr[GetIntField(comp, "badnikIndex").Get(0, badniksArr.Length - 1)];
         var monitor = monitorArr[GetIntField(comp, "monitorIndex").Get(0, monitorArr.Length - 1)];
 
-        string capitalizeWords(string input) => Regex.Replace(input, @"\b[a-z]", m => m.Value.ToUpperInvariant());
-
         var badnikName = fldLabel.GetFrom(badnik, v => !SonicKnucklesBadniksSprites.Any(s => s.name == v) ? "not a recognized badnik name" : null);
         var monitorName = fldLabel.GetFrom(monitor, v => !SonicKnucklesMonitorsSprites.Any(s => s.name == v) ? "not a recognized monitor name" : null);
         var illegalSound =
@@ -1679,6 +1677,24 @@ public partial class SouvenirModule
             qs.Add(makeQuestion(Question.StabilityIdNumber, _Stability, correctAnswers: new[] { GetField<string>(comp, "idNumber").Get() }));
 
         addQuestions(module, qs);
+    }
+
+    private IEnumerable<object> ProcessStableTimeSignatures(KMBombModule module)
+    {
+        var comp = GetComponent(module, "StableTimeSignatures");
+        var fldSolved = GetField<bool>(comp, "moduleSolved");
+
+        while (!fldSolved.Get())
+            yield return new WaitForSeconds(.1f);
+        _modulesSolved.IncSafe(_StableTimeSignatures);
+
+        var topSequence = GetListField<string>(comp, "randomSequenceTop", isPublic: true)
+            .Get(validator: l => l.All(s => !"123456789".Contains(s)) ? "Bad digit" : null);
+        var bottomSequence = GetListField<string>(comp, "randomSequenceBottom", isPublic: true)
+            .Get(expectedLength: topSequence.Count, validator: s => !"1248".Contains(s) ? "Bad digit" : null);
+        var answers = Enumerable.Range(0, topSequence.Count).Select(i => $"{topSequence[i]}/{bottomSequence[i]}").ToArray();
+        addQuestions(module, answers.Select((s, i) => makeQuestion(Question.StableTimeSignaturesSignatures, _StableTimeSignatures,
+            formatArgs: new[] { ordinal(i + 1) }, correctAnswers: new[] { s }, preferredWrongAnswers: answers)));
     }
 
     private IEnumerable<object> ProcessStackedSequences(KMBombModule module)

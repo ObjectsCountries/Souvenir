@@ -673,6 +673,10 @@
             ExampleExtraFormatArguments = new[] { QandA.Ordinal }, ExampleExtraFormatArgumentGroupSize = 1)]
         DevilishEggsLetters,
 
+        [SouvenirQuestion("What was the displayed concentration in this compartment in {0}?", "Diffusion", ThreeColumns6Answers, "A0B0", "A1B0", "A2B0", "A3B0", "A4B0", "A0B1", "A1B1", "A2B1", "A3B1", "A4B1", "A0B2", "A1B2", "A2B2", "A3B2", "A4B2", "A0B3", "A1B3", "A2B3", "A3B3", "A4B3", "A0B4", "A1B4", "A2B4", "A3B4", "A4B4",
+           TranslateAnswers = false, UsesQuestionSprite = true)]
+        DiffusionCell,
+
         [SouvenirQuestion("What was the number on the {1} button in {0}?", "Digisibility", ThreeColumns6Answers, null,
             ExampleExtraFormatArguments = new[] { QandA.Ordinal }, ExampleExtraFormatArgumentGroupSize = 1)]
         [AnswerGenerator.Integers(1, 9)]
@@ -731,6 +735,10 @@
 
         [SouvenirQuestion("Which button was the submit button in {0}?", "Double-Oh", ThreeColumns6Answers, "↕", "⇕", "↔", "⇔", "◆")]
         DoubleOhSubmitButton,
+
+        [SouvenirQuestion("What color was the {1} screen in the {2} stage of {0}?", "Double Screen", TwoColumns4Answers, "Red", "Yellow", "Green", "Blue",
+            ExampleExtraFormatArguments = new[] { "top", QandA.Ordinal, "bottom", QandA.Ordinal }, ExampleExtraFormatArgumentGroupSize = 2)]
+        DoubleScreenColors,
 
         [SouvenirQuestion("Which of these symptoms was listed on {0}?", "Dr. Doctor", TwoColumns4Answers, "Bloating", "Chills", "Cold Hands", "Constipation", "Cough", "Diarrhea", "Disappearance of the Ears", "Dizziness", "Excessive Crying", "Fatigue", "Fever", "Foot swelling", "Gas", "Hallucination", "Headache", "Loss of Smell", "Muscle Cramp", "Nausea", "Numbness", "Shortness of Breath", "Sleepiness", "Thirstiness", "Throat irritation")]
         DrDoctorSymptoms,
@@ -813,15 +821,10 @@
             ExampleExtraFormatArguments = new[] { "message", "response" }, ExampleExtraFormatArgumentGroupSize = 1, TranslateFormatArgs = new[] { true })]
         EnigmaCycleWords,
 
-        [SouvenirQuestion("What was the first number shown in {0}?", "Entry Number Four", TwoColumns4Answers, ExampleAnswers = new[] { "01234567", "42424242", "99999999", "66669420" })]
+        [SouvenirQuestion("What was the {1} number shown in {0}?", "Entry Number Four", TwoColumns4Answers, ExampleAnswers = new[] { "01234567", "42424242", "99999999", "66669420" },
+            ExampleExtraFormatArguments = new[] { QandA.Ordinal }, ExampleExtraFormatArgumentGroupSize = 1)]
         [AnswerGenerator.Integers(10000000, 99999999, 1, "00000000")]
-        EntryNumberFourNumber1,
-        [SouvenirQuestion("What was the second number shown in {0}?", "Entry Number Four", TwoColumns4Answers, ExampleAnswers = new[] { "01234567", "42424242", "99999999", "66669420" })]
-        [AnswerGenerator.Integers(0, 99999999, 1, "00000000")]
-        EntryNumberFourNumber2,
-        [SouvenirQuestion("What was the third number shown in {0}?", "Entry Number Four", TwoColumns4Answers, ExampleAnswers = new[] { "01234567", "42424242", "99999999", "66669420" })]
-        [AnswerGenerator.Integers(0, 99999999, 1, "00000000")]
-        EntryNumberFourNumber3,
+        EntryNumberFourNumbers,
         [SouvenirQuestion("What was the expected fourth entry in {0}?", "Entry Number Four", TwoColumns4Answers, ExampleAnswers = new[] { "01234567", "42424242", "99999999", "66669420" })]
         [AnswerGenerator.Integers(0, 99999999, 1, "00000000")]
         EntryNumberFourExpected,
@@ -2594,6 +2597,10 @@
         [AnswerGenerator.Integers(0, 9999, "0000")]
         StabilityIdNumber,
 
+        [SouvenirQuestion("What was the {1} time signature in {0}?", "Stable Time Signatures", ThreeColumns6Answers, "1/1", "2/1", "3/1", "4/1", "5/1", "6/1", "7/1", "8/1", "9/1", "1/2", "2/2", "3/2", "4/2", "5/2", "6/2", "7/2", "8/2", "9/2", "1/4", "2/4", "3/4", "4/4", "5/4", "6/4", "7/4", "8/4", "9/4", "1/8", "2/8", "3/8", "4/8", "5/8", "6/8", "7/8", "8/8", "9/8",
+            ExampleExtraFormatArguments = new[] { QandA.Ordinal }, ExampleExtraFormatArgumentGroupSize = 1)]
+        StableTimeSignaturesSignatures,
+
         [SouvenirQuestion("Which of these is the length of a sequence in {0}?", "Stacked Sequences", TwoColumns4Answers, null, ExampleAnswers = new[] { "3", "4", "5", "6" })]
         [AnswerGenerator.Integers(3, 9)]
         StackedSequences,
@@ -2719,6 +2726,10 @@
         [SouvenirQuestion("What was on the {1} button at the start of {0}?", "Tic Tac Toe", ThreeColumns6Answers, "1", "2", "3", "4", "5", "6", "7", "8", "9", "O", "X", Type = AnswerType.TicTacToeFont,
             ExampleExtraFormatArguments = new[] { "top-left", "top-middle", "top-right", "middle-left", "middle-center", "middle-right", "bottom-left", "bottom-middle", "bottom-right" }, ExampleExtraFormatArgumentGroupSize = 1, TranslateFormatArgs = new[] { true })]
         TicTacToeInitialState,
+
+        [SouvenirQuestion("What was the {1} time signature in {0}?", "Time Signatures", ThreeColumns6Answers, "1/1", "2/1", "3/1", "4/1", "5/1", "6/1", "7/1", "8/1", "9/1", "1/2", "2/2", "3/2", "4/2", "5/2", "6/2", "7/2", "8/2", "9/2", "1/4", "2/4", "3/4", "4/4", "5/4", "6/4", "7/4", "8/4", "9/4", "1/8", "2/8", "3/8", "4/8", "5/8", "6/8", "7/8", "8/8", "9/8",
+            ExampleExtraFormatArguments = new[] { QandA.Ordinal }, ExampleExtraFormatArgumentGroupSize = 1)]
+        TimeSignaturesSignatures,
 
         [SouvenirQuestion("What was the {1} city in {0}?", "Timezone", TwoColumns4Answers, "Alofi", "Papeete", "Unalaska", "Whitehorse", "Denver", "Managua", "Quito", "Manaus", "Buenos Aires", "Sao Paulo", "Praia", "Edinburgh", "Berlin", "Bujumbura", "Moscow", "Tbilisi", "Lahore", "Omsk", "Bangkok", "Beijing", "Tokyo", "Brisbane", "Sydney", "Tarawa",
             ExampleExtraFormatArguments = new[] { "departure", "destination" }, ExampleExtraFormatArgumentGroupSize = 1, TranslateFormatArgs = new[] { true })]

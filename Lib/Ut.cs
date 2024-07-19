@@ -420,24 +420,17 @@ namespace Souvenir
                 yield return sb.ToString();
         }
 
-        private static bool isWrappableAfter(string txt, int index)
+        private static bool isWrappableAfter(string txt, int index) => txt[index] switch
         {
-            switch (txt[index])
-            {
-                // Return false for all the whitespace characters that should NOT be wrappable
-                case '\u00a0':   // NO-BREAK SPACE
-                case '\u202f':    // NARROW NO-BREAK SPACE
-                    return false;
-
-                // Return true for all the NON-whitespace characters that SHOULD be wrappable
-                case '\u200b':   // ZERO WIDTH SPACE
-                    return true;
-
-                // Apart from the above exceptions, wrap at whitespace characters.
-                default:
-                    return char.IsWhiteSpace(txt, index);
-            }
-        }
+            // Return false for all the whitespace characters that should NOT be wrappable
+            // NO-BREAK SPACE and NARROW NO-BREAK SPACE
+            '\u00a0' or '\u202f' => false,
+            // Return true for all the NON-whitespace characters that SHOULD be wrappable
+            // ZERO WIDTH SPACE
+            '\u200b' => true,
+            // Apart from the above exceptions, wrap at whitespace characters.
+            _ => char.IsWhiteSpace(txt, index),
+        };
 
         public static int IndexOf<T>(this IEnumerable<T> source, Func<T, bool> predicate)
         {

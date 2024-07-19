@@ -184,6 +184,22 @@ public partial class SouvenirModule
         addQuestions(module, qs);
     }
 
+    private IEnumerable<object> ProcessDiffusion(KMBombModule module)
+    {
+        var comp = GetComponent(module, "diffusionScript");
+        var fldSolved = GetField<bool>(comp, "solved");
+
+        while (!fldSolved.Get())
+            yield return new WaitForSeconds(0.1f);
+        _modulesSolved.IncSafe(_Diffusion);
+
+        var states = GetListField<int>(comp, "diffused").Get(expectedLength: 12, validator: v => v is < 0 or > 24 ? $"Bad number {v}" : null);
+        var names = new string[] { "A0B0", "A1B0", "A2B0", "A3B0", "A4B0", "A0B1", "A1B1", "A2B1", "A3B1", "A4B1", "A0B2", "A1B2", "A2B2", "A3B2", "A4B2", "A0B3", "A1B3", "A2B3", "A3B3", "A4B3", "A0B4", "A1B4", "A2B4", "A3B4", "A4B4" };
+        
+        addQuestions(module, states.Select((s, i) =>
+                makeQuestion(Question.DiffusionCell, _Diffusion, correctAnswers: new[] { names[s] }, questionSprite: DiffusionSprites[i])));
+    }
+
     private IEnumerable<object> ProcessDigisibility(KMBombModule module)
     {
         var comp = GetComponent(module, "digisibilityScript");
@@ -458,6 +474,46 @@ public partial class SouvenirModule
             throw new AbandonModuleException($"Submit button is at index {submitIndex} (expected 0–4).");
 
         addQuestion(module, Question.DoubleOhSubmitButton, correctAnswers: new[] { "↕↔⇔⇕◆".Substring(submitIndex, 1) });
+    }
+
+    private IEnumerable<object> ProcessDoubleScreen(KMBombModule module)
+    {
+        var comp = GetComponent(module, "DoubleScreenScript");
+        var fldSolved = GetField<bool>(comp, "moduleSolved");
+
+        List<(int Top, int Bottom)> stages = new();
+        module.OnStrike += () => { stages.Clear(); return false; };
+
+        yield return null;  // Ensures that the module’s Start() method has run
+        var stageCount = GetField<int>(comp, "stageCount").Get(v => v is < 2 or > 3 ? $"Bad stage count {v}" : null);
+        var screen = GetArrayField<GameObject>(comp, "screens", isPublic: true).Get(expectedLength: 2)[0];
+        var colors = GetArrayField<int>(comp, "colors");
+
+        bool newStage = true;
+        while (!fldSolved.Get())
+        {
+            if (newStage && screen.activeSelf)
+            {
+                newStage = false;
+                var col = colors.Get(expectedLength: 2, validator: i => i is < 0 or > 3 ? $"Bad color {i}" : null);
+                stages.Add((col[0], col[1]));
+            }
+            else if (!newStage && !screen.activeSelf)
+                newStage = true;
+
+            // Screens are off for 0.2s between stages and only turn back on after stage generation.
+            yield return new WaitForSeconds(.1f);
+        }
+        _modulesSolved.IncSafe(_DoubleScreen);
+
+        if (stages.Count != stageCount)
+            throw new AbandonModuleException($"Expected {stageCount} stages but found {stages.Count}.");
+
+        var colorNames = new string[] { "Red", "Yellow", "Green", "Blue" };
+        addQuestions(module, stages.SelectMany((s, i) => new QandA[] {
+                makeQuestion(Question.DoubleScreenColors, _DoubleScreen, correctAnswers: new[] { colorNames[s.Top] }, formatArgs: new[] { "top", ordinal(i + 1) }),
+                makeQuestion(Question.DoubleScreenColors, _DoubleScreen, correctAnswers: new[] { colorNames[s.Bottom] }, formatArgs: new[] { "bottom", ordinal(i + 1) })
+        }));
     }
 
     private IEnumerable<object> ProcessDrDoctor(KMBombModule module)
