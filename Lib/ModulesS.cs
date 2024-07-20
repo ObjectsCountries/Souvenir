@@ -1312,7 +1312,7 @@ public partial class SouvenirModule
     {
         var comp = GetComponent(module, "SmashMarryKill");
         var type = comp.GetType();
-
+        var words = GetField<Enum>(comp, "SMKwords");
         var fldSMKmodules = GetStaticField<Dictionary<string, Enum>>(type, "allModules").Get(validator: d => !Bomb.GetSolvableModuleNames().All(m => d.ContainsKey(m)) ? "Module in Smash, Marry, Kill that is not actually present" : null);
         while (!_isActivated)
             yield return new WaitForSeconds(.1f);
