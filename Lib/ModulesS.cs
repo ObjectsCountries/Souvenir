@@ -1312,8 +1312,7 @@ public partial class SouvenirModule
     {
         var comp = GetComponent(module, "SmashMarryKill");
         var type = comp.GetType();
-        var words = GetField<Enum>(comp, "SMKwords");
-        var fldSMKmodules = GetStaticField<Dictionary<string, Enum>>(type, "allModules").Get(validator: d => !Bomb.GetSolvableModuleNames().All(m => d.ContainsKey(m)) ? "Module in Smash, Marry, Kill that is not actually present" : null);
+        var fldSMKmodules = GetStaticField<IDictionary>(type, "allModules").Get(validator: d => Bomb.GetSolvableModuleNames().All(m => d.Contains(m)) ? "Module in Smash, Marry, Kill that is not actually present" : null);
         while (!_isActivated)
             yield return new WaitForSeconds(.1f);
         yield return null; // Wait one frame to make sure the Display field has been set.
@@ -1335,9 +1334,11 @@ public partial class SouvenirModule
         var myIgnoredList = GetArrayField<string>(comp, "ignoredModules").Get();
         var totalModuleCount = Bomb.GetSolvableModuleNames().Count;
         var SMKallQuestions = new List<QandA>();
+        var oneSMK = _moduleCounts[_SmashMarryKill] == 1;
         foreach (string mod in Bomb.GetSolvableModuleNames())
         {
-            SMKallQuestions.Add(makeQuestion(Question.SmashMarryKillCategoryOfGivenModule, "smashmarrykill", formatArgs: new[] { mod }, correctAnswers: new[] { fldSMKmodules.ContainsKey(mod) ? "" + fldSMKmodules[mod].ToString() : "Ignored" }));
+            if (mod != "Smash, Marry, Kill" && mod != "Souvenir")
+                SMKallQuestions.Add(makeQuestion(Question.SmashMarryKillCategoryOfGivenModule, "smashmarrykill", formattedModuleName: "Smash, Marry, Kill", formatArgs: new[] { mod }, correctAnswers: new[] { fldSMKmodules.Contains(mod) ? "" + fldSMKmodules[mod].ToString() : "Ignored" }, singleInstance: oneSMK));
         }
         addQuestions(module, SMKallQuestions);
     }
